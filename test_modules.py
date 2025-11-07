@@ -112,8 +112,9 @@ def test_analytics():
     import tempfile
     from analytics import UserAnalytics
     
-    # Use temporary file for testing
-    temp_file = tempfile.mktemp(suffix='.json')
+    # Use secure temporary file for testing
+    temp_fd, temp_file = tempfile.mkstemp(suffix='.json')
+    os.close(temp_fd)  # Close the file descriptor as we'll use the path
     
     try:
         analytics = UserAnalytics(temp_file)
