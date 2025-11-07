@@ -16,6 +16,11 @@ from emotion_engine import EmotionEngine
 class AIFortuneTeller:
     """AI算命师核心类"""
     
+    # 配置常量
+    DEFAULT_TEMPERATURE = 0.8
+    DEFAULT_MAX_TOKENS = 800
+    DEFAULT_MAX_HISTORY = 20
+    
     def __init__(self, personality_type: str = "rational"):
         """
         初始化AI算命师
@@ -95,19 +100,22 @@ class AIFortuneTeller:
         messages = [{"role": "system", "content": system_prompt}]
         
         # 添加历史对话（保留最近的对话）
-        max_history = int(os.getenv("MAX_HISTORY_LENGTH", "20"))
+        max_history = int(os.getenv("MAX_HISTORY_LENGTH", str(self.DEFAULT_MAX_HISTORY)))
         messages.extend(self.conversation_history[-max_history:])
         
         # 添加当前用户消息
         messages.append({"role": "user", "content": user_message})
         
         try:
-            # 调用OpenAI API
+            # 调用OpenAI API，使用可配置的参数
+            temperature = float(os.getenv("OPENAI_TEMPERATURE", str(self.DEFAULT_TEMPERATURE)))
+            max_tokens = int(os.getenv("OPENAI_MAX_TOKENS", str(self.DEFAULT_MAX_TOKENS)))
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,
-                temperature=0.8,
-                max_tokens=800
+                temperature=temperature,
+                max_tokens=max_tokens
             )
             
             ai_response = response.choices[0].message.content

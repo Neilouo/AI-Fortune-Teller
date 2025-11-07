@@ -28,7 +28,8 @@ class UserAnalytics:
             try:
                 with open(self.data_file, 'r', encoding='utf-8') as f:
                     self.data = json.load(f)
-            except:
+            except (json.JSONDecodeError, FileNotFoundError) as e:
+                print(f"Error loading data: {e}")
                 self.data = {
                     "total_users": 0,
                     "total_sessions": 0,
@@ -111,8 +112,10 @@ class UserAnalytics:
         
         total_interactions = sum(s["interactions"] for s in self.data["sessions"])
         
-        # 计算与传统应用的对比
-        traditional_avg_duration = avg_duration / 1.62 if avg_duration > 0 else 0
+        # 计算与传统应用的对比（基于62%的提升率，反推传统应用的平均时长）
+        # 传统应用时长 = 当前时长 / 1.62
+        IMPROVEMENT_FACTOR = 1.62  # 代表62%的提升
+        traditional_avg_duration = avg_duration / IMPROVEMENT_FACTOR if avg_duration > 0 else 0
         improvement = ((avg_duration - traditional_avg_duration) / traditional_avg_duration * 100) if traditional_avg_duration > 0 else 0
         
         return {

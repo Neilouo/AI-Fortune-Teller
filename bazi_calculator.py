@@ -9,6 +9,9 @@ from datetime import datetime
 class BaziCalculator:
     """八字计算器"""
     
+    # 性格特征判定阈值
+    PERSONALITY_TRAIT_THRESHOLD = 2
+    
     # 天干
     TIANGAN = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
     # 地支
@@ -107,16 +110,17 @@ class BaziCalculator:
         """
         wuxing = self.analyze_wuxing()
         traits = []
+        threshold = self.PERSONALITY_TRAIT_THRESHOLD
         
-        if wuxing["金"] >= 2:
+        if wuxing["金"] >= threshold:
             traits.append("果断坚毅，具有领导力")
-        if wuxing["木"] >= 2:
+        if wuxing["木"] >= threshold:
             traits.append("仁慈善良，富有同情心")
-        if wuxing["水"] >= 2:
+        if wuxing["水"] >= threshold:
             traits.append("聪明灵活，善于思考")
-        if wuxing["火"] >= 2:
+        if wuxing["火"] >= threshold:
             traits.append("热情积极，充满活力")
-        if wuxing["土"] >= 2:
+        if wuxing["土"] >= threshold:
             traits.append("稳重踏实，值得信赖")
             
         return traits if traits else ["性格平衡，五行调和"]
