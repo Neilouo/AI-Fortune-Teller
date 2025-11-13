@@ -32,11 +32,16 @@ class AIFortuneTeller:
         
         self.api_key = os.getenv("OPENAI_API_KEY")
         self.model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+        self.api_base = os.getenv("OPENAI_API_BASE")
         
         if not self.api_key:
             raise ValueError("请在.env文件中设置OPENAI_API_KEY")
         
-        self.client = OpenAI(api_key=self.api_key)
+        # 支持自定义API Base（如硅基流动平台）
+        if self.api_base:
+            self.client = OpenAI(api_key=self.api_key, base_url=self.api_base)
+        else:
+            self.client = OpenAI(api_key=self.api_key)
         self.personality_type = personality_type
         self.personality = PersonalityPrompts.get_personality(personality_type)
         self.emotion_engine = EmotionEngine()
