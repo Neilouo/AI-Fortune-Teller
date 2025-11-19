@@ -52,6 +52,10 @@ st.markdown("""
         transition: all 0.3s ease;
         background: white;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     .personality-card:hover {
         border-color: #667eea;
@@ -59,8 +63,21 @@ st.markdown("""
         transform: translateY(-3px);
     }
     .personality-card h3 {
-        margin-bottom: 0.5rem;
+        margin: 0 0 0.8rem 0;
         color: #333;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .personality-card p {
+        margin: 0;
+        line-height: 1.5;
+        font-size: 0.95rem;
+        color: #666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
     .report-section {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
