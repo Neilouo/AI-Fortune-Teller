@@ -129,12 +129,33 @@ pip install -r requirements.txt
 
 ### 2. OpenAI API 错误
 
-**问题**：`OpenAI API key not found`
+**问题**：`OPENAI_API_KEY未配置` 或 `OpenAI API key not found`
 
-**解决**：
-- 检查 `.env` 文件是否存在
-- 确认 API Key 正确无误
-- 确保 `.env` 文件在项目根目录
+**解决方案根据部署环境**：
+
+**本地运行**：
+- 检查 `.env` 文件是否存在于项目根目录
+- 确认 API Key 正确填写在 `.env` 文件中
+- 格式示例：`OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxx`
+
+**Streamlit Cloud 部署**：
+- 在应用管理页面点击 "Settings" → "Secrets"
+- 添加以下配置：
+  ```toml
+  OPENAI_API_KEY = "your_key_here"
+  ```
+- 保存后重启应用
+
+**环境变量方式**：
+```bash
+export OPENAI_API_KEY=your_key_here  # Linux/Mac
+set OPENAI_API_KEY=your_key_here     # Windows
+```
+
+应用会按以下优先级查找 API Key：
+1. Streamlit Secrets（Streamlit Cloud）
+2. 环境变量
+3. .env 文件
 
 ### 3. 端口占用
 
@@ -184,6 +205,68 @@ black *.py
 # 代码检查
 flake8 *.py --max-line-length=120
 ```
+
+## 部署到 Streamlit Cloud
+
+### 前提条件
+
+- GitHub 账号
+- OpenAI API Key
+
+### 部署步骤
+
+1. **Fork 仓库**
+   - 访问 [GitHub 仓库](https://github.com/Neilouo/AI-Fortune-Teller)
+   - 点击右上角 "Fork" 按钮
+   - Fork 到您的 GitHub 账号
+
+2. **注册 Streamlit Cloud**
+   - 访问 [share.streamlit.io](https://share.streamlit.io)
+   - 使用 GitHub 账号登录
+   - 授权 Streamlit 访问您的仓库
+
+3. **创建新应用**
+   - 点击 "New app"
+   - 选择您 fork 的仓库：`your-username/AI-Fortune-Teller`
+   - 分支选择：`main`
+   - 主文件路径：`app.py`
+
+4. **配置 Secrets**
+   - 点击 "Advanced settings"
+   - 在 "Secrets" 部分添加：
+   ```toml
+   OPENAI_API_KEY = "your_openai_api_key_here"
+   OPENAI_MODEL = "gpt-3.5-turbo"
+   ```
+   
+   如果使用自定义 API Base（如硅基流动）：
+   ```toml
+   OPENAI_API_KEY = "your_api_key"
+   OPENAI_MODEL = "your_model_name"
+   OPENAI_API_BASE = "https://api.example.com/v1"
+   ```
+
+5. **部署应用**
+   - 点击 "Deploy"
+   - Streamlit Cloud 会自动：
+     - 安装 `requirements.txt` 中的依赖
+     - 启动应用
+     - 分配公开访问链接
+
+6. **访问应用**
+   - 部署完成后，您将获得一个类似 `https://your-app.streamlit.app` 的链接
+   - 分享此链接给其他用户访问
+
+### 管理已部署的应用
+
+- **查看日志**：点击右下角 "Manage app" → "Logs"
+- **重启应用**：点击 "Reboot"
+- **更新 Secrets**：点击 "Settings" → "Secrets"
+- **删除应用**：点击 "Delete app"
+
+### 自动更新
+
+当您向 GitHub 仓库推送代码时，Streamlit Cloud 会自动检测并重新部署应用。
 
 ## Docker 部署（可选）
 

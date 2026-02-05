@@ -30,12 +30,31 @@ class AIFortuneTeller:
         """
         load_dotenv()
         
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
-        self.api_base = os.getenv("OPENAI_API_BASE")
+        # Try multiple sources for API key
+        # 1. Try Streamlit secrets (for Streamlit Cloud deployment)
+        self.api_key = None
+        try:
+            import streamlit as st
+            if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
+                self.api_key = st.secrets['OPENAI_API_KEY']
+                self.model = st.secrets.get('OPENAI_MODEL', 'gpt-3.5-turbo')
+                self.api_base = st.secrets.get('OPENAI_API_BASE', None)
+        except (ImportError, FileNotFoundError, KeyError):
+            pass
+        
+        # 2. Fall back to environment variables (including .env file)
+        if not self.api_key:
+            self.api_key = os.getenv("OPENAI_API_KEY")
+            self.model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+            self.api_base = os.getenv("OPENAI_API_BASE")
         
         if not self.api_key:
-            raise ValueError("请在.env文件中设置OPENAI_API_KEY")
+            raise ValueError(
+                "OPENAI_API_KEY未配置。请通过以下方式之一设置：\n"
+                "1. Streamlit Cloud: 在应用设置中添加 secrets\n"
+                "2. 本地运行: 在.env文件中设置OPENAI_API_KEY\n"
+                "3. 环境变量: export OPENAI_API_KEY=your_key"
+            )
         
         # 支持自定义API Base（如硅基流动平台）
         if self.api_base:

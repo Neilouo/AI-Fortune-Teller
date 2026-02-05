@@ -47,7 +47,7 @@
 - Python 3.8+
 - OpenAI API Key
 
-### 安装步骤
+### 本地运行
 
 1. **克隆仓库**
 ```bash
@@ -73,6 +73,27 @@ streamlit run app.py
 
 5. **访问应用**
 打开浏览器访问 `http://localhost:8501`
+
+### 部署到 Streamlit Cloud
+
+1. **Fork 本仓库**到您的 GitHub 账号
+
+2. **在 Streamlit Cloud 创建应用**
+   - 访问 [share.streamlit.io](https://share.streamlit.io)
+   - 选择您 fork 的仓库
+   - 主文件路径：`app.py`
+
+3. **配置 Secrets**
+   - 点击应用的 "Settings" → "Secrets"
+   - 添加以下内容：
+   ```toml
+   OPENAI_API_KEY = "your_openai_api_key_here"
+   OPENAI_MODEL = "gpt-3.5-turbo"
+   ```
+
+4. **部署完成**
+   - Streamlit Cloud 会自动安装依赖并启动应用
+   - 您的应用将获得一个公开访问链接
 
 ## 📖 使用指南
 
