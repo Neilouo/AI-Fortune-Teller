@@ -41,6 +41,8 @@ st.markdown("""
     #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
     header { background: transparent !important; }
+    /* 修复侧边栏折叠按钮图标显示为 keyboard_double 的 bug：隐藏该控件 */
+    [data-testid="collapsedControl"] { display: none !important; }
 
     /* 主头部 - 神秘感 */
     .main-header {
