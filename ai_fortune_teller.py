@@ -46,7 +46,7 @@ class AIFortuneTeller:
         if not self.api_key:
             self.api_key = os.getenv("OPENAI_API_KEY")
             self.model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
-            self.api_base = os.getenv("OPENAI_API_BASE")
+            self.api_base = (os.getenv("OPENAI_API_BASE") or "").strip() or None  # 支持 GLM-5 等自定义 base_url
         
         if not self.api_key:
             raise ValueError(

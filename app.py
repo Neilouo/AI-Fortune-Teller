@@ -21,184 +21,289 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 自定义CSS样式
+# 自定义CSS样式 - 整体美化
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+    /* 全局：背景与主内容区 */
+    .stApp {
+        background: linear-gradient(160deg, #0f0d1a 0%, #1a1625 40%, #151220 100%);
+    }
+    .main .block-container {
+        max-width: 900px;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+    h1, h2, h3 { font-family: 'Noto Serif SC', serif !important; }
+    p, span, div, label { font-family: 'Inter', 'Noto Serif SC', sans-serif !important; }
+
+    /* 隐藏 Streamlit 默认多余元素 */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    header { background: transparent !important; }
+
+    /* 主头部 - 神秘感 */
     .main-header {
         text-align: center;
-        padding: 2rem 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
+        padding: 2.5rem 1.5rem;
+        background: linear-gradient(145deg, rgba(62,39,83,0.95) 0%, rgba(40,25,55,0.98) 100%);
+        border-radius: 20px;
         margin-bottom: 2rem;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
         color: white;
+        border: 1px solid rgba(255,255,255,0.06);
     }
     .main-header h1 {
-        color: white;
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.04em;
     }
-    .main-header p {
-        color: rgba(255,255,255,0.95);
-        font-size: 1.1rem;
+    .main-header p, .main-header .tagline {
+        color: #ffffff;
+        font-size: 0.95rem;
+        margin-top: 0.2rem;
     }
+
+    /* 人格卡片 - 玻璃拟态，高对比文字 */
     .personality-card {
         padding: 1.5rem;
-        border-radius: 12px;
-        border: 2px solid #e0e0e0;
-        margin: 0.5rem 0;
+        border-radius: 16px;
+        margin: 0.6rem 0;
         cursor: pointer;
-        transition: all 0.3s ease;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        height: 150px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        transition: all 0.25s ease;
+        background: rgba(255,255,255,0.06);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.15);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        min-height: 160px;
     }
     .personality-card:hover {
-        border-color: #667eea;
-        box-shadow: 0 6px 16px rgba(102,126,234,0.3);
-        transform: translateY(-3px);
+        border-color: var(--card-accent);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.3), 0 0 0 1px var(--card-accent);
+        transform: translateY(-2px);
     }
     .personality-card h3 {
-        margin: 0 0 0.8rem 0;
-        color: #333;
+        margin: 0 0 0.4rem 0;
+        color: #ffffff;
         font-size: 1.2rem;
         font-weight: 600;
+    }
+    .personality-card .slogan {
+        font-size: 0.8rem;
+        color: #f0ecf5;
+        font-style: italic;
+        margin-bottom: 0.5rem;
+        line-height: 1.45;
     }
     .personality-card p {
         margin: 0;
         line-height: 1.5;
-        font-size: 0.95rem;
-        color: #666;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
+        font-size: 0.88rem;
+        color: #ffffff;
         -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
     }
+    .personality-card .tag {
+        display: inline-block;
+        margin-top: 0.6rem;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        background: rgba(255,255,255,0.12);
+        color: #f5f2fa;
+    }
+
+    /* 报告区域 */
     .report-section {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: rgba(255,255,255,0.03);
         padding: 2rem;
-        border-radius: 15px;
+        border-radius: 16px;
         margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
-    .chat-message {
-        padding: 1.2rem;
+    .report-summary-card {
+        background: linear-gradient(135deg, rgba(62,39,83,0.9) 0%, rgba(40,25,55,0.95) 100%);
+        color: #ffffff;
+        padding: 1.2rem 1.5rem;
         border-radius: 12px;
-        margin: 0.8rem 0;
-        animation: fadeIn 0.3s ease;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+    .report-summary-card strong { color: #ffffff; }
+    .share-line {
+        background: rgba(255,255,255,0.08);
+        padding: 0.85rem 1rem;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #f5f2fa;
+        margin-top: 0.8rem;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .question-group-title {
+        font-size: 0.8rem;
+        color: #ffffff;
+        font-weight: 600;
+        margin: 1rem 0 0.5rem 0;
+        letter-spacing: 0.03em;
+    }
+
+    /* 对话气泡 */
+    .chat-message {
+        padding: 1rem 1.25rem;
+        border-radius: 16px;
+        margin: 0.75rem 0;
+        animation: fadeIn 0.35s ease;
     }
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
+        from { opacity: 0; transform: translateY(8px); }
         to { opacity: 1; transform: translateY(0); }
     }
     .user-message {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        margin-left: 20%;
-        box-shadow: 0 3px 10px rgba(102,126,234,0.3);
+        background: linear-gradient(135deg, rgba(88,65,120,0.9) 0%, rgba(62,45,90,0.95) 100%);
+        color: #ffffff;
+        margin-left: 18%;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     }
     .ai-message {
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        margin-right: 20%;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #ffffff;
+        margin-right: 18%;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
+
+    /* 侧边栏统计 */
     .stats-box {
-        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        background: linear-gradient(145deg, rgba(62,39,83,0.6) 0%, rgba(40,25,55,0.7) 100%);
         padding: 1.2rem;
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,0.06);
     }
-    .question-chip {
-        display: inline-block;
-        padding: 0.6rem 1.2rem;
-        margin: 0.3rem;
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        color: white;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        box-shadow: 0 2px 8px rgba(245,87,108,0.3);
-    }
-    .question-chip:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(245,87,108,0.5);
-    }
-    .bazi-info-card {
-        background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .element-bar {
-        display: flex;
-        align-items: center;
-        margin: 0.5rem 0;
-    }
-    .element-name {
-        width: 60px;
-        font-weight: bold;
-    }
+    .element-bar { display: flex; align-items: center; margin: 0.5rem 0; }
+    .element-name { width: 60px; font-weight: 600; color: #ffffff; }
     .element-progress {
-        flex: 1;
-        height: 20px;
-        background-color: rgba(255,255,255,0.3);
+        flex: 1; height: 18px;
+        background: rgba(255,255,255,0.1);
         border-radius: 10px;
         overflow: hidden;
         margin-left: 10px;
     }
+
+    /* 按钮统一 */
     .stButton>button {
-        border-radius: 8px;
+        border-radius: 10px;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
+        border: 1px solid rgba(255,255,255,0.15);
     }
     .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(88,65,120,0.35);
     }
+    .stButton>button[kind="primary"] {
+        background: linear-gradient(135deg, #5a3d7a 0%, #4a2d6a 100%);
+        color: #f5f0fa;
+    }
+
+    /* 输入框、滑块等与深色背景协调 */
+    .stTextInput>div>div>input, .stSelectbox>div {
+        background: rgba(255,255,255,0.1) !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        color: #ffffff !important;
+        border-radius: 10px;
+    }
+    .stTextInput input::placeholder { color: rgba(255,255,255,0.6) !important; }
+    .stSlider label { color: #f5f5f5 !important; }
+    .stSelectbox label { color: #f5f5f5 !important; }
+    .stDateInput label { color: #f5f5f5 !important; }
+    .stExpander {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+    }
+    /* 标题与正文：高对比度白/浅色 */
+    .main h2 { color: #ffffff !important; }
+    .main h3 { color: #ffffff !important; }
+    .main p, .main .stMarkdown, .main div[data-testid="stMarkdown"] { color: #f5f5f5 !important; }
+    .main .stMarkdown p { color: #f5f5f5 !important; }
+    .stCaption { color: #f0f0f0 !important; }
+    .report-section .stMarkdown, .report-section p { color: #ffffff !important; }
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #120f1a 0%, #0d0a14 100%);
+        border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p { color: #f5f5f5 !important; }
+    /* 信息框与 Tab */
+    .stAlert {
+        background: rgba(50,35,70,0.7) !important;
+        border: 1px solid rgba(255,255,255,0.12) !important;
+        border-radius: 12px;
+        color: #ffffff !important;
+    }
+    .stAlert p { color: #ffffff !important; }
+    [data-baseweb="tab-list"] {
+        background: rgba(255,255,255,0.06) !important;
+        border-radius: 12px;
+        padding: 4px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    [data-baseweb="tab"] { color: #ffffff !important; }
+    .stTabs [data-baseweb="tab-highlight"] { background: rgba(88,65,120,0.5) !important; }
+    /* 更多组件高对比度 */
+    .stExpander label { color: #ffffff !important; }
+    .stExpander .stMarkdown { color: #f5f5f5 !important; }
+    [data-testid="stMetricValue"] { color: #ffffff !important; }
+    [data-testid="stMetricLabel"] { color: #e8e8e8 !important; }
+    .stSlider [data-baseweb="slider"] { color: #f5f5f5; }
+    .main label { color: #f5f5f5 !important; }
 </style>
 """, unsafe_allow_html=True)
 
 
-def get_recommended_questions(personality_type: str = "") -> List[str]:
-    """获取推荐问题列表"""
-    base_questions = [
+# 推荐问题按场景分组，便于用户快速找到想问的
+QUESTION_GROUPS = {
+    "事业与财运": [
         "我的事业运势如何？",
-        "最近感情方面有什么建议吗？",
         "我适合从事什么职业？",
         "如何提升我的财运？",
-        "我的性格有哪些优势和劣势？",
-        "今年我需要注意什么？",
+        "从命理角度分析我的职业规划",
+    ],
+    "感情与人际": [
+        "最近感情方面有什么建议吗？",
         "我和什么样的人最合得来？",
-        "我的健康方面需要注意什么？"
-    ]
-    
-    # 根据人格类型添加特定问题
-    if personality_type == "rational":
-        base_questions.extend([
-            "从命理角度分析我的职业规划",
-            "我的五行缺什么？如何平衡？"
-        ])
-    elif personality_type == "gentle":
-        base_questions.extend([
-            "我最近很迷茫，能给我一些鼓励吗？",
-            "如何让自己变得更好？"
-        ])
-    elif personality_type == "sharp":
-        base_questions.extend([
-            "直接告诉我，我最大的问题是什么？",
-            "我需要改变什么才能成功？"
-        ])
-    
-    return base_questions
+        "今年桃花运怎么样？",
+    ],
+    "自我与健康": [
+        "我的性格有哪些优势和劣势？",
+        "我的健康方面需要注意什么？",
+        "今年我需要注意什么？",
+    ],
+    "更多话题": [
+        "我的五行缺什么？如何平衡？",
+        "我最近很迷茫，能给我一些鼓励吗？",
+        "直接告诉我，我最大的问题是什么？",
+    ],
+}
+
+
+def get_recommended_questions(personality_type: str = "") -> List[str]:
+    """获取推荐问题列表（扁平化，供随机等使用）"""
+    all_q = []
+    for qs in QUESTION_GROUPS.values():
+        all_q.extend(qs)
+    return all_q
+
+
+def get_random_question(personality_type: str = "") -> str:
+    """随机返回一个推荐问题，用于「随机一问」"""
+    questions = get_recommended_questions(personality_type)
+    return random.choice(questions) if questions else "我的事业运势如何？"
 
 
 def init_session_state():
@@ -226,94 +331,110 @@ def init_session_state():
         st.session_state.default_question = random.choice(default_questions)
 
 
+# 人格展示增强：金句 + 适合人群
+PERSONALITY_SLOGANS = {
+    'rational': '「三分天注定，七分靠打拼」—— 用逻辑帮你把命理讲清楚',
+    'gentle': '「你值得被温柔以待」—— 像知心朋友一样陪你说说话',
+    'sharp': '「别自欺欺人，听我一句真话」—— 犀利但为你好的那种',
+}
+PERSONALITY_TAGS = {
+    'rational': '适合：需要理性分析、职业规划、想听依据的人',
+    'gentle': '适合：压力大、需要安慰、想被理解的人',
+    'sharp': '适合：想听真话、不怕被怼、需要被点醒的人',
+}
+
+
 def display_personality_selection():
     """显示人格选择界面"""
-    st.markdown('<div class="main-header"><h1>🔮 AI算命大师</h1><p>选择您喜欢的大师风格，开启专属命理之旅</p></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="main-header">'
+        '<h1>🔮 AI算命大师</h1>'
+        '<p>选一位合眼缘的大师，开启你的专属命理之旅</p>'
+        '<p class="tagline">传统八字 × 现代AI × 三种人格，总有一款懂你</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
-    st.markdown("### ✨ 三位大师，三种风格，总有一款适合您")
+    st.markdown("### ✨ 三位大师，三种风格")
+    st.caption("点击卡片下方按钮即可选择，选错也没关系，随时可以「重新开始」换一位。")
     st.write("---")
     
     personalities = PersonalityPrompts.get_all_personalities()
-    
-    personality_icons = {
-        'rational': '🧠',
-        'gentle': '💕',
-        'sharp': '⚡'
-    }
-    
-    personality_colors = {
-        'rational': '#4A90E2',
-        'gentle': '#E91E63',
-        'sharp': '#FF9800'
-    }
+    personality_icons = {'rational': '🧠', 'gentle': '💕', 'sharp': '⚡'}
+    personality_colors = {'rational': '#4A6FA5', 'gentle': '#B84D6B', 'sharp': '#C17F3D'}
     
     cols = st.columns(3)
-    
     for idx, (key, personality) in enumerate(personalities.items()):
         with cols[idx]:
             icon = personality_icons[key]
             color = personality_colors[key]
-            
-            st.markdown(f"""
-            <div class="personality-card" style="border-color: {color};">
-                <h3 style="color: {color};">{icon} {personality['name']}</h3>
-                <p style="color: #666; line-height: 1.6;">{personality['description']}</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if st.button(f"选择 {personality['name']}", key=f"btn_{key}", use_container_width=True):
+            slogan = PERSONALITY_SLOGANS.get(key, '')
+            tag = PERSONALITY_TAGS.get(key, '')
+            st.markdown(
+                f'<div class="personality-card" style="--card-accent: {color};">'
+                f'<h3 style="color: {color};">{icon} {personality["name"]}</h3>'
+                f'<div class="slogan">{slogan}</div>'
+                f'<p>{personality["description"]}</p>'
+                f'<span class="tag">{tag}</span>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+            if st.button(f"就选 TA → {personality['name']}", key=f"btn_{key}", use_container_width=True):
                 st.session_state.selected_personality = key
                 st.session_state.ai_fortune_teller = AIFortuneTeller(key)
                 st.session_state.analytics.start_session(key)
                 st.session_state.session_started = True
-                st.success(f"✅ 已选择 {personality['name']}！")
+                st.success(f"✅ 已选择 {personality['name']}，接下来输入生辰即可开始～")
                 time.sleep(0.5)
                 st.rerun()
     
-    # 添加说明
     st.markdown("---")
-    st.info("💡 **小提示**：不同的大师风格会带来不同的对话体验，建议根据您当前的心情和需求选择合适的大师。")
+    st.info("💡 **小提示**：不同大师说话风格差别很大，可以按你此刻的心情选——想被安慰选温柔，想听真话选毒舌，想理性分析选理性。")
 
 
 def display_birth_info_input():
     """显示生辰信息输入界面"""
-    st.markdown('<div class="main-header"><h1>📝 请输入您的生辰信息</h1><p>准确的生辰信息将帮助我们为您提供更精准的分析</p></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="main-header">'
+        '<h1>📝 输入生辰信息</h1>'
+        '<p>用于计算八字与五行，越准确分析越有参考价值</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
-    st.markdown("### 🎂 基本信息")
+    st.markdown("### 🎂 出生日期与时辰")
     
     col1, col2 = st.columns(2)
-    
     with col1:
         birth_date = st.date_input(
-            "出生日期 📅",
+            "出生日期（阳历）📅",
             min_value=date(1900, 1, 1),
             max_value=date.today(),
             value=date(1990, 1, 1),
             help="请选择您的阳历出生日期"
         )
-    
     with col2:
         birth_hour = st.slider(
-            "出生时辰（时） ⏰", 
+            "出生时辰（小时）⏰",
             0, 23, 12,
-            help="请选择您的出生小时（0-23），如果不确定可选择12点"
+            help="0–23 点。不确定可先选 12 点，对整体分析影响有限"
         )
     
-    # 时辰说明
-    time_periods = {
-        "子时": "23:00-01:00", "丑时": "01:00-03:00",
-        "寅时": "03:00-05:00", "卯时": "05:00-07:00",
-        "辰时": "07:00-09:00", "巳时": "09:00-11:00",
-        "午时": "11:00-13:00", "未时": "13:00-15:00",
-        "申时": "15:00-17:00", "酉时": "17:00-19:00",
-        "戌时": "19:00-21:00", "亥时": "21:00-23:00"
-    }
-    
-    st.markdown("#### 📖 时辰参考")
-    cols = st.columns(4)
-    for idx, (period, time_range) in enumerate(time_periods.items()):
-        with cols[idx % 4]:
-            st.caption(f"**{period}**: {time_range}")
+    # 时辰说明改为折叠，减少首屏信息量
+    with st.expander("📖 不确定时辰？点这里看对照表"):
+        time_periods = {
+            "子时": "23:00-01:00", "丑时": "01:00-03:00",
+            "寅时": "03:00-05:00", "卯时": "05:00-07:00",
+            "辰时": "07:00-09:00", "巳时": "09:00-11:00",
+            "午时": "11:00-13:00", "未时": "13:00-15:00",
+            "申时": "15:00-17:00", "酉时": "17:00-19:00",
+            "戌时": "19:00-21:00", "亥时": "21:00-23:00"
+        }
+        cols = st.columns(4)
+        for idx, (period, time_range) in enumerate(time_periods.items()):
+            with cols[idx % 4]:
+                st.caption(f"**{period}**: {time_range}")
+        st.caption("💡 记不清的话选 12 点即可，后续对话中也可以再问大师「时辰不准会怎样」。")
     
     st.markdown("---")
     
@@ -335,14 +456,14 @@ def display_birth_info_input():
                         'day': birth_date.day,
                         'hour': birth_hour
                     }
-                    st.success("✅ 八字计算完成！")
+                    st.success("✅ 八字已算好，去和大师聊聊吧～")
                     time.sleep(0.5)
                     st.rerun()
             except Exception as e:
                 st.error(f"❌ 处理生辰信息时出错：{str(e)}")
     
     st.markdown("---")
-    st.info("🔒 **隐私保护**：您的所有信息仅用于本次算命，不会被保存或分享。")
+    st.info("🔒 **隐私说明**：生辰仅用于本次会话的八字与对话分析，不会被保存或分享。")
 
 
 def display_bazi_summary():
@@ -396,36 +517,43 @@ def display_bazi_summary():
 
 def display_chat_interface():
     """显示对话界面"""
-    st.markdown('<div class="main-header"><h1>💬 与大师对话</h1><p>诚心提问，用心解答</p></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="main-header">'
+        '<h1>💬 与大师对话</h1>'
+        '<p>想问什么就问什么，事业、感情、财运、健康都可以</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
-    # 显示八字摘要
     display_bazi_summary()
     
-    # 推荐问题区域
+    # 推荐问题：分组展示 + 随机一问
     if len(st.session_state.chat_history) == 0:
-        st.markdown("### 💡 推荐问题")
-        st.markdown("*点击下方问题快速开始对话*")
+        st.markdown("### 💡 不知道问啥？点下面任意一句开始")
         
-        recommended = get_recommended_questions(st.session_state.ai_fortune_teller.personality_type)
+        # 随机一问
+        if st.button("🎲 随机一问", help="随机选一个问题帮你开场"):
+            q = get_random_question(st.session_state.ai_fortune_teller.personality_type)
+            st.session_state.selected_question = q
+            st.rerun()
         
-        # 创建问题按钮网格
-        cols = st.columns(2)
-        for idx, question in enumerate(recommended[:6]):
-            col_idx = idx % 2
-            with cols[col_idx]:
-                if st.button(f"💭 {question}", key=f"rec_q_{idx}", use_container_width=True):
-                    # 使用推荐问题
-                    st.session_state.selected_question = question
-                    st.rerun()
+        for group_name, questions in QUESTION_GROUPS.items():
+            st.markdown(f'<p class="question-group-title">{group_name}</p>', unsafe_allow_html=True)
+            cols = st.columns(2)
+            for idx, question in enumerate(questions[:4]):  # 每组最多展示 4 个
+                col_idx = idx % 2
+                with cols[col_idx]:
+                    if st.button(f"💭 {question}", key=f"rec_{group_name}_{idx}", use_container_width=True):
+                        st.session_state.selected_question = question
+                        st.rerun()
         
         st.markdown("---")
     
     # 对话历史
     chat_container = st.container()
-    
     with chat_container:
         if len(st.session_state.chat_history) == 0:
-            st.info("👋 您好！我是您的专属算命大师，请随时向我提问。")
+            st.info("👋 大师已就位，选一个问题或自己输入，开始你的第一问吧～")
         
         for message in st.session_state.chat_history:
             if message['role'] == 'user':
@@ -433,47 +561,38 @@ def display_chat_interface():
             else:
                 st.markdown(f'<div class="chat-message ai-message">🔮 {message["content"]}</div>', unsafe_allow_html=True)
     
-    # 输入框
-    st.markdown("### 💬 提问区")
+    st.markdown("### 💬 提问")
     
-    # 检查是否有选中的推荐问题
     if 'selected_question' in st.session_state:
         user_input = st.session_state.selected_question
         del st.session_state.selected_question
         process_user_input(user_input)
         st.rerun()
     
-    # 根据对话历史动态生成placeholder
     if len(st.session_state.chat_history) == 0:
         placeholder_text = f"💭 例如：{st.session_state.default_question}"
     else:
-        placeholder_text = "💭 继续提问..."
+        placeholder_text = "💭 继续问下一句..."
     
     col1, col2 = st.columns([5, 1])
-    
     with col1:
         user_input = st.text_input(
-            "请输入您的问题", 
-            key="user_input", 
-            label_visibility="collapsed", 
+            "请输入您的问题",
+            key="user_input",
+            label_visibility="collapsed",
             placeholder=placeholder_text
         )
-    
     with col2:
         send_button = st.button("发送 📤", type="primary", use_container_width=True)
     
-    # 如果点击发送但没有输入内容，使用默认问题
     if send_button:
         if user_input.strip():
-            # 用户有输入，使用用户输入
             process_user_input(user_input)
             st.rerun()
         elif len(st.session_state.chat_history) == 0:
-            # 用户没有输入且是首次对话，使用默认问题
             process_user_input(st.session_state.default_question)
             st.rerun()
         else:
-            # 用户没有输入且不是首次对话，提示用户
             st.warning("⚠️ 请输入您的问题")
 
 
@@ -499,85 +618,126 @@ def process_user_input(user_input: str):
     })
 
 
+def _report_summary(report: str, max_len: int = 200) -> str:
+    """从报告中截取前一段作为摘要，避免截断句中"""
+    if not report or len(report) <= max_len:
+        return report.strip()
+    s = report[:max_len]
+    for sep in ["。", "！", "？", "\n", "；"]:
+        idx = s.rfind(sep)
+        if idx > max_len // 2:
+            return s[: idx + 1].strip()
+    return s.strip() + "…"
+
+
+def _share_line(report_type: str) -> str:
+    """生成可复制的分享文案"""
+    return f"我刚在 🔮 AI算命大师 生成了{report_type}，既有八字又有心理分析，挺好玩的～（仅供娱乐）"
+
+
 def display_reports():
     """显示报告生成界面"""
-    st.markdown('<div class="main-header"><h1>📄 生成专属报告</h1><p>深度分析，洞察未来</p></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="main-header">'
+        '<h1>📄 生成专属报告</h1>'
+        '<p>命理 + 心理双维度，一份报告看懂自己</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
-    st.info("💡 提示：生成报告前建议先进行一些对话，这样报告会更加准确和个性化。")
+    st.info("💡 先多聊几句再生成报告，内容会更贴你。")
     
     col1, col2 = st.columns(2)
-    
     with col1:
         st.markdown("### 🔮 命理报告")
-        st.write("全面分析您的命理特征，包括事业、感情、财运、健康等多个维度。")
-        if st.button("🎯 生成命理报告", type="primary", use_container_width=True):
+        st.caption("八字、五行、事业/感情/财运/健康综合解读")
+        if st.button("🎯 生成命理报告", type="primary", use_container_width=True, key="btn_fortune"):
             with st.spinner('正在生成命理报告...'):
                 report = st.session_state.ai_fortune_teller.generate_fortune_report()
                 st.session_state.fortune_report = report
                 st.session_state.analytics.record_interaction("命理报告")
-                st.success("✅ 报告生成成功！")
+                st.success("✅ 命理报告已生成，可下载或复制分享文案。")
     
     with col2:
         st.markdown("### 🧠 心理报告")
-        st.write("基于对话内容分析您的心理状态，提供专业的心理洞察和建议。")
-        if st.button("🎯 生成心理报告", type="primary", use_container_width=True):
+        st.caption("基于对话内容的心理状态与成长建议")
+        if st.button("🎯 生成心理报告", type="primary", use_container_width=True, key="btn_psych"):
             with st.spinner('正在生成心理报告...'):
                 report = st.session_state.ai_fortune_teller.generate_psychological_report()
                 st.session_state.psychological_report = report
                 st.session_state.analytics.record_interaction("心理报告")
-                st.success("✅ 报告生成成功！")
+                st.success("✅ 心理报告已生成，可下载或复制分享文案。")
     
     st.markdown("---")
     
-    # 显示命理报告
     if 'fortune_report' in st.session_state:
+        report = st.session_state.fortune_report
+        summary = _report_summary(report)
+        st.markdown(
+            f'<div class="report-summary-card">'
+            f'<strong>📌 命理报告摘要</strong><br>{summary}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
         st.markdown('<div class="report-section">', unsafe_allow_html=True)
         st.markdown("## 🔮 命理分析报告")
-        st.markdown(st.session_state.fortune_report)
-        
-        # 下载按钮
-        report_text = f"命理分析报告\n生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n{st.session_state.fortune_report}"
+        st.markdown(report)
+        report_text = f"命理分析报告\n生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n{report}"
         st.download_button(
             label="📥 下载报告",
             data=report_text,
             file_name=f"命理报告_{datetime.now().strftime('%Y%m%d')}.txt",
-            mime="text/plain"
+            mime="text/plain",
+            key="dl_fortune"
         )
+        share_msg = _share_line("命理报告")
+        st.markdown(f'<div class="share-line">📤 分享文案（可复制）：<br>{share_msg}</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     
-    # 显示心理报告
     if 'psychological_report' in st.session_state:
+        report = st.session_state.psychological_report
+        summary = _report_summary(report)
+        st.markdown(
+            f'<div class="report-summary-card">'
+            f'<strong>📌 心理报告摘要</strong><br>{summary}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
         st.markdown('<div class="report-section">', unsafe_allow_html=True)
         st.markdown("## 🧠 心理分析报告")
-        st.markdown(st.session_state.psychological_report)
-        
-        # 下载按钮
-        report_text = f"心理分析报告\n生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n{st.session_state.psychological_report}"
+        st.markdown(report)
+        report_text = f"心理分析报告\n生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n{report}"
         st.download_button(
             label="📥 下载报告",
             data=report_text,
             file_name=f"心理报告_{datetime.now().strftime('%Y%m%d')}.txt",
-            mime="text/plain"
+            mime="text/plain",
+            key="dl_psych"
         )
+        share_msg = _share_line("心理报告")
+        st.markdown(f'<div class="share-line">📤 分享文案（可复制）：<br>{share_msg}</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
 
 def display_rating():
     """显示评分界面"""
     st.markdown("---")
-    st.markdown("### 💯 为您的体验评分")
-    st.write("您的反馈对我们非常重要，帮助我们不断改进服务质量。")
+    st.markdown("### 💯 体验如何？给我们打个分吧")
+    st.caption("你的反馈会帮助我们越做越好～")
     
     col1, col2 = st.columns([3, 1])
-    
     with col1:
-        rating = st.slider("满意度评分", 1.0, 5.0, 4.5, 0.1, 
-                          help="1星=非常不满意，5星=非常满意")
-    
+        rating = st.select_slider(
+            "满意度",
+            options=[1.0, 2.0, 3.0, 4.0, 5.0],
+            value=5.0,
+            format_func=lambda x: f"{'⭐' * int(x)} {x} 分",
+            help="1 分=很不满意，5 分=非常满意"
+        )
     with col2:
         if st.button("✅ 提交评分", type="primary", use_container_width=True):
             st.session_state.analytics.end_session(rating)
-            st.success("感谢您的反馈！🙏")
+            st.success("感谢你的反馈！🙏")
             st.balloons()
 
 
@@ -637,9 +797,9 @@ def main():
     with st.sidebar:
         st.markdown("""
         <div style="text-align: center; padding: 1rem;">
-            <h1 style="color: #667eea;">🔮</h1>
-            <h2 style="margin: 0;">AI算命大师</h2>
-            <p style="color: #888; margin: 0.5rem 0;">融合传统命理与现代AI</p>
+            <h1 style="color: #c8b8e0;">🔮</h1>
+            <h2 style="margin: 0; color: #e8e0f0;">AI算命大师</h2>
+            <p style="color: rgba(200,190,220,0.8); margin: 0.5rem 0; font-size: 0.9rem;">传统八字 × 现代AI</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -665,10 +825,10 @@ def main():
         # 底部信息
         st.sidebar.markdown("---")
         st.sidebar.markdown("""
-        <div style="text-align: center; color: #888; font-size: 0.8rem;">
-            <p>💡 AI算命仅供娱乐参考</p>
-            <p>📧 反馈建议请联系客服</p>
-            <p style="margin-top: 1rem;">© 2024 AI算命大师</p>
+        <div style="text-align: center; color: rgba(180,170,200,0.75); font-size: 0.8rem;">
+            <p>💡 仅供娱乐，理性看待</p>
+            <p>📧 有问题可提 Issue</p>
+            <p style="margin-top: 1rem;">© AI算命大师</p>
         </div>
         """, unsafe_allow_html=True)
     

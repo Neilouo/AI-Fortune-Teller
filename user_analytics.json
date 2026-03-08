@@ -1,0 +1,21 @@
+{
+  "total_users": 0,
+  "total_sessions": 1,
+  "sessions": [
+    {
+      "session_id": "session_20260308154934",
+      "personality_type": "rational",
+      "start_time": "2026-03-08T15:49:34.442751",
+      "interactions": 1,
+      "topics_discussed": [
+        "财运"
+      ],
+      "end_time": "2026-03-08T15:49:53.069970",
+      "duration_seconds": 18.627219,
+      "rating": 5.0
+    }
+  ],
+  "ratings": [
+    5.0
+  ]
+}
