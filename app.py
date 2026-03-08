@@ -41,8 +41,13 @@ st.markdown("""
     #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
     header { background: transparent !important; }
-    /* 修复侧边栏折叠按钮图标显示为 keyboard_double 的 bug：隐藏该控件 */
-    [data-testid="collapsedControl"] { display: none !important; }
+    /* 修复侧边栏折叠按钮图标显示为 keyboard_double 的 bug */
+    [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] *,
+    button[aria-label*="sidebar"],
+    button[aria-label*="collapse"],
+    [class*="sidebarCollapse"],
+    [class*="SidebarCollapse"] { display: none !important; visibility: hidden !important; }
 
     /* 主头部 - 神秘感 */
     .main-header {
@@ -152,6 +157,19 @@ st.markdown("""
         margin: 1rem 0 0.5rem 0;
         letter-spacing: 0.03em;
     }
+    /* 人格选择页标题与说明：高对比度 */
+    .personality-section-title {
+        font-size: 1.35rem !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        margin: 0 0 0.4rem 0 !important;
+    }
+    .personality-section-hint {
+        font-size: 0.95rem !important;
+        color: #f0f0f0 !important;
+        margin: 0 0 1rem 0 !important;
+        line-height: 1.5 !important;
+    }
 
     /* 对话气泡 */
     .chat-message {
@@ -179,14 +197,85 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
 
-    /* 侧边栏统计 */
+    /* ========== 侧边栏整体 ========== */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0f0c14 0%, #0a0810 100%) !important;
+        border-right: 1px solid rgba(255,255,255,0.08) !important;
+    }
+    [data-testid="stSidebar"] > div {
+        padding: 1.25rem 1rem 1.5rem !important;
+        background: transparent !important;
+    }
+    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p { color: #f0eef5 !important; }
+    [data-testid="stSidebar"] h3 { color: #ffffff !important; font-size: 0.9rem !important; margin-bottom: 0.6rem !important; }
+    [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.08) !important; margin: 1rem 0 !important; }
+
+    .sidebar-brand {
+        text-align: center;
+        padding: 1.25rem 0.75rem 1.5rem;
+        margin-bottom: 1rem;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-brand .icon { font-size: 2rem; display: block; margin-bottom: 0.35rem; }
+    .sidebar-brand .title { font-size: 1.1rem; font-weight: 700; color: #ffffff; margin: 0; letter-spacing: 0.02em; }
+    .sidebar-brand .tagline { font-size: 0.75rem; color: rgba(240,238,245,0.7); margin: 0.35rem 0 0; }
+
+    .sidebar-section-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 1.25rem 0 0.6rem;
+    }
+    .sidebar-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    .sidebar-card .value { font-size: 1.5rem; font-weight: 700; color: #ffffff; line-height: 1.2; }
+    .sidebar-card .label { font-size: 0.75rem; color: rgba(240,238,245,0.75); margin-top: 0.25rem; }
+    .sidebar-metric-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .sidebar-metric-item { flex: 1; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 0.6rem; text-align: center; border: 1px solid rgba(255,255,255,0.06); }
+    .sidebar-metric-item .val { font-size: 0.95rem; font-weight: 600; color: #ffffff; }
+    .sidebar-metric-item .lbl { font-size: 0.65rem; color: rgba(240,238,245,0.7); margin-top: 0.15rem; }
+    .sidebar-personality-item { font-size: 0.8rem; color: #f0eef5; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+    .sidebar-personality-item:last-child { border-bottom: none; }
+    .sidebar-footer {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        text-align: center;
+        font-size: 0.72rem;
+        color: rgba(220,215,235,0.65);
+        line-height: 1.6;
+    }
+    [data-testid="stSidebar"] .stButton > button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        background: rgba(255,255,255,0.06) !important;
+        color: #f0eef5 !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+    }
+    [data-testid="stSidebar"] .stButton > button:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.15) !important;
+    }
+
+    /* 侧边栏统计（保留兼容） */
     .stats-box {
-        background: linear-gradient(145deg, rgba(62,39,83,0.6) 0%, rgba(40,25,55,0.7) 100%);
-        padding: 1.2rem;
+        background: rgba(255,255,255,0.05);
+        padding: 1rem;
         border-radius: 12px;
         text-align: center;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
     }
+    .stats-box h2, .stats-box .value { color: #ffffff !important; }
+    .stats-box p, .stats-box .label { color: rgba(240,238,245,0.8) !important; }
     .element-bar { display: flex; align-items: center; margin: 0.5rem 0; }
     .element-name { width: 60px; font-weight: 600; color: #ffffff; }
     .element-progress {
@@ -214,21 +303,40 @@ st.markdown("""
     }
 
     /* 输入框、滑块等与深色背景协调 */
-    .stTextInput>div>div>input, .stSelectbox>div {
-        background: rgba(255,255,255,0.1) !important;
-        border: 1px solid rgba(255,255,255,0.2) !important;
+    .stTextInput>div>div>input,
+    .stTextInput input,
+    [data-testid="stTextInput"] input,
+    .stSelectbox>div {
+        background: rgba(255,255,255,0.12) !important;
+        border: 1px solid rgba(255,255,255,0.25) !important;
         color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
         border-radius: 10px;
     }
-    .stTextInput input::placeholder { color: rgba(255,255,255,0.6) !important; }
+    .stTextInput input::placeholder,
+    [data-testid="stTextInput"] input::placeholder {
+        color: rgba(255,255,255,0.7) !important;
+        -webkit-text-fill-color: rgba(255,255,255,0.7) !important;
+    }
+    [data-testid="stTextInput"] input:focus { border-color: rgba(255,255,255,0.4) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.2) !important; }
+    .stTextInput input { caret-color: #ffffff !important; }
     .stSlider label { color: #f5f5f5 !important; }
     .stSelectbox label { color: #f5f5f5 !important; }
     .stDateInput label { color: #f5f5f5 !important; }
     .stExpander {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
         border-radius: 12px;
     }
+    .stExpander label, .stExpander summary, [data-testid="stExpander"] label { color: #ffffff !important; }
+    .stExpander .stCaption, [data-testid="stExpander"] .stCaption { color: #f5f5f5 !important; }
+    /* 隐藏 Streamlit 未渲染的 Material 图标（显示为 keyboard_arrow_right、arrow、down、right 等文字） */
+    [data-testid="stIconMaterial"] { display: none !important; visibility: hidden !important; font-size: 0 !important; line-height: 0 !important; overflow: hidden !important; }
+    [data-testid="stDateInput"] label { color: #ffffff !important; }
+    /* 出生日期与时辰区块：标题和标签都用纯白，提高可读性 */
+    .birth-section-title { color: #ffffff !important; font-size: 1.25rem !important; }
+    .main [data-testid="stDateInput"] label, .main [data-testid="stDateInput"] div { color: #ffffff !important; }
+    .main [data-testid="stSlider"] label { color: #ffffff !important; }
     /* 标题与正文：高对比度白/浅色 */
     .main h2 { color: #ffffff !important; }
     .main h3 { color: #ffffff !important; }
@@ -236,11 +344,6 @@ st.markdown("""
     .main .stMarkdown p { color: #f5f5f5 !important; }
     .stCaption { color: #f0f0f0 !important; }
     .report-section .stMarkdown, .report-section p { color: #ffffff !important; }
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #120f1a 0%, #0d0a14 100%);
-        border-right: 1px solid rgba(255,255,255,0.06);
-    }
-    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p { color: #f5f5f5 !important; }
     /* 信息框与 Tab */
     .stAlert {
         background: rgba(50,35,70,0.7) !important;
@@ -264,9 +367,19 @@ st.markdown("""
     [data-testid="stMetricLabel"] { color: #e8e8e8 !important; }
     .stSlider [data-baseweb="slider"] { color: #f5f5f5; }
     .main label { color: #f5f5f5 !important; }
+    /* 对话/提问/评分等区块标题：纯白加粗，确保看清 */
+    .section-title-strong,
+    .main p.section-title-strong,
+    p.section-title-strong {
+        color: #ffffff !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        margin: 0.8rem 0 0.5rem 0 !important;
+        text-shadow: 0 0 1px rgba(0,0,0,0.5);
+    }
+    .question-group-title { color: #ffffff !important; font-weight: 600 !important; }
 </style>
 """, unsafe_allow_html=True)
-
 
 # 推荐问题按场景分组，便于用户快速找到想问的
 QUESTION_GROUPS = {
@@ -356,15 +469,16 @@ def display_personality_selection():
         '</div>',
         unsafe_allow_html=True
     )
-    
-    st.markdown("### ✨ 三位大师，三种风格")
-    st.caption("点击卡片下方按钮即可选择，选错也没关系，随时可以「重新开始」换一位。")
+    st.markdown(
+        '<p class="personality-section-title">✨ 三位大师，三种风格</p>'
+        '<p class="personality-section-hint">点击卡片下方按钮即可选择，选错也没关系，随时可以「重新开始」换一位。</p>',
+        unsafe_allow_html=True
+    )
     st.write("---")
-    
+
     personalities = PersonalityPrompts.get_all_personalities()
     personality_icons = {'rational': '🧠', 'gentle': '💕', 'sharp': '⚡'}
     personality_colors = {'rational': '#4A6FA5', 'gentle': '#B84D6B', 'sharp': '#C17F3D'}
-    
     cols = st.columns(3)
     for idx, (key, personality) in enumerate(personalities.items()):
         with cols[idx]:
@@ -386,10 +500,8 @@ def display_personality_selection():
                 st.session_state.ai_fortune_teller = AIFortuneTeller(key)
                 st.session_state.analytics.start_session(key)
                 st.session_state.session_started = True
-                st.success(f"✅ 已选择 {personality['name']}，接下来输入生辰即可开始～")
-                time.sleep(0.5)
                 st.rerun()
-    
+
     st.markdown("---")
     st.info("💡 **小提示**：不同大师说话风格差别很大，可以按你此刻的心情选——想被安慰选温柔，想听真话选毒舌，想理性分析选理性。")
 
@@ -404,7 +516,7 @@ def display_birth_info_input():
         unsafe_allow_html=True
     )
     
-    st.markdown("### 🎂 出生日期与时辰")
+    st.markdown('<p class="birth-section-title">🎂 出生日期与时辰</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
@@ -458,8 +570,10 @@ def display_birth_info_input():
                         'day': birth_date.day,
                         'hour': birth_hour
                     }
-                    st.success("✅ 八字已算好，去和大师聊聊吧～")
-                    time.sleep(0.5)
+                    try:
+                        st.toast("八字已算好，正在进入对话～")
+                    except Exception:
+                        pass
                     st.rerun()
             except Exception as e:
                 st.error(f"❌ 处理生辰信息时出错：{str(e)}")
@@ -531,7 +645,7 @@ def display_chat_interface():
     
     # 推荐问题：分组展示 + 随机一问
     if len(st.session_state.chat_history) == 0:
-        st.markdown("### 💡 不知道问啥？点下面任意一句开始")
+        st.markdown('<p class="section-title-strong">💡 不知道问啥？点下面任意一句开始</p>', unsafe_allow_html=True)
         
         # 随机一问
         if st.button("🎲 随机一问", help="随机选一个问题帮你开场"):
@@ -563,7 +677,7 @@ def display_chat_interface():
             else:
                 st.markdown(f'<div class="chat-message ai-message">🔮 {message["content"]}</div>', unsafe_allow_html=True)
     
-    st.markdown("### 💬 提问")
+    st.markdown('<p class="section-title-strong">💬 提问</p>', unsafe_allow_html=True)
     
     if 'selected_question' in st.session_state:
         user_input = st.session_state.selected_question
@@ -724,7 +838,7 @@ def display_reports():
 def display_rating():
     """显示评分界面"""
     st.markdown("---")
-    st.markdown("### 💯 体验如何？给我们打个分吧")
+    st.markdown('<p class="section-title-strong">💯 体验如何？给我们打个分吧</p>', unsafe_allow_html=True)
     st.caption("你的反馈会帮助我们越做越好～")
     
     col1, col2 = st.columns([3, 1])
@@ -747,48 +861,49 @@ def display_statistics():
     """在侧边栏显示统计信息"""
     stats = st.session_state.analytics.get_statistics()
     
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("### 📊 平台统计")
-    
+    st.sidebar.markdown('<p class="sidebar-section-title">📊 平台统计</p>', unsafe_allow_html=True)
     st.sidebar.markdown(f"""
-    <div class="stats-box">
-        <h2 style="margin: 0; color: #FF6B6B;">{stats['total_sessions']}</h2>
-        <p style="margin: 0.5rem 0 0 0; color: #666;">总体验人数</p>
+    <div class="sidebar-card">
+        <div class="value">{stats['total_sessions']}</div>
+        <div class="label">总体验人数</div>
     </div>
     """, unsafe_allow_html=True)
     
     if stats['total_sessions'] > 0:
-        st.sidebar.markdown("<br>", unsafe_allow_html=True)
-        
-        col1, col2 = st.sidebar.columns(2)
-        with col1:
-            st.metric("⏱️ 平均时长", f"{stats['avg_duration_minutes']:.1f}分钟")
-        with col2:
-            st.metric("⭐ 满意度", f"{stats['avg_rating']:.1f}/5.0")
-        
+        # 分块输出 HTML，避免嵌套 f-string 导致内层被转义成纯文本
+        dur = f"{stats['avg_duration_minutes']:.1f}"
+        rating = f"{stats['avg_rating']:.1f}"
+        card1 = (
+            '<div class="sidebar-card">'
+            '<div class="sidebar-metric-row">'
+            '<div class="sidebar-metric-item"><div class="val">⏱️ ' + dur + ' 分钟</div><div class="lbl">平均时长</div></div>'
+            '<div class="sidebar-metric-item"><div class="val">⭐ ' + rating + '/5</div><div class="lbl">满意度</div></div>'
+            '</div></div>'
+        )
+        st.sidebar.markdown(card1, unsafe_allow_html=True)
         if stats['improvement_percentage'] > 0:
-            st.sidebar.metric(
-                "📈 体验提升",
-                f"{stats['improvement_percentage']:.1f}%",
-                delta=f"+{stats['improvement_percentage']:.1f}%",
-                help="相比传统算命应用的提升"
+            pct = f"{stats['improvement_percentage']:.1f}"
+            card2 = (
+                '<div class="sidebar-card">'
+                '<div class="sidebar-metric-item">'
+                '<div class="val">📈 +' + pct + '%</div><div class="lbl">体验提升</div>'
+                '</div></div>'
             )
+            st.sidebar.markdown(card2, unsafe_allow_html=True)
     
-    # 人格统计
     personality_stats = st.session_state.analytics.get_personality_stats()
     if personality_stats:
-        st.sidebar.markdown("---")
-        st.sidebar.markdown("### 🎭 人格选择分布")
-        
         personality_names = {
             'rational': '🧠 理性大师',
             'gentle': '💕 温柔大师',
             'sharp': '⚡ 毒舌大师'
         }
-        
-        for personality, count in personality_stats.items():
-            name = personality_names.get(personality, personality)
-            st.sidebar.write(f"{name}: **{count}** 次")
+        st.sidebar.markdown('<p class="sidebar-section-title">🎭 人格分布</p>', unsafe_allow_html=True)
+        items_html = "".join(
+            f'<div class="sidebar-personality-item"><span>{personality_names.get(p, p)}</span><span>{c} 次</span></div>'
+            for p, c in personality_stats.items()
+        )
+        st.sidebar.markdown(f'<div class="sidebar-card">{items_html}</div>', unsafe_allow_html=True)
 
 
 def main():
@@ -798,45 +913,37 @@ def main():
     # 侧边栏
     with st.sidebar:
         st.markdown("""
-        <div style="text-align: center; padding: 1rem;">
-            <h1 style="color: #c8b8e0;">🔮</h1>
-            <h2 style="margin: 0; color: #e8e0f0;">AI算命大师</h2>
-            <p style="color: rgba(200,190,220,0.8); margin: 0.5rem 0; font-size: 0.9rem;">传统八字 × 现代AI</p>
+        <div class="sidebar-brand">
+            <span class="icon">🔮</span>
+            <p class="title">AI算命大师</p>
+            <p class="tagline">传统八字 × 现代AI</p>
         </div>
         """, unsafe_allow_html=True)
         
-        # 显示统计信息
         display_statistics()
         
-        # 功能按钮
         if st.session_state.bazi_set:
-            st.sidebar.markdown("---")
-            st.sidebar.markdown("### ⚙️ 功能菜单")
-            
+            st.sidebar.markdown('<p class="sidebar-section-title">功能</p>', unsafe_allow_html=True)
             if st.sidebar.button("💬 清空对话", use_container_width=True, help="清空当前对话记录"):
                 st.session_state.ai_fortune_teller.reset_conversation()
                 st.session_state.chat_history = []
                 st.success("对话已清空！")
                 st.rerun()
-            
             if st.sidebar.button("🔄 重新开始", use_container_width=True, help="重新选择大师和输入生辰"):
                 st.session_state.clear()
                 st.success("已重置！")
                 st.rerun()
         
-        # 底部信息
-        st.sidebar.markdown("---")
         st.sidebar.markdown("""
-        <div style="text-align: center; color: rgba(180,170,200,0.75); font-size: 0.8rem;">
+        <div class="sidebar-footer">
             <p>💡 仅供娱乐，理性看待</p>
             <p>📧 有问题可提 Issue</p>
-            <p style="margin-top: 1rem;">© AI算命大师</p>
+            <p style="margin-top: 0.75rem;">© AI算命大师</p>
         </div>
         """, unsafe_allow_html=True)
     
     # 主界面
     if not st.session_state.session_started:
-        # 人格选择阶段
         display_personality_selection()
     elif not st.session_state.bazi_set:
         # 生辰信息输入阶段

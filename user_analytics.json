@@ -1,6 +1,6 @@
 {
   "total_users": 0,
-  "total_sessions": 1,
+  "total_sessions": 2,
   "sessions": [
     {
       "session_id": "session_20260308154934",
@@ -13,9 +13,22 @@
       "end_time": "2026-03-08T15:49:53.069970",
       "duration_seconds": 18.627219,
       "rating": 5.0
+    },
+    {
+      "session_id": "session_20260308184359",
+      "personality_type": "rational",
+      "start_time": "2026-03-08T18:43:59.990867",
+      "interactions": 1,
+      "topics_discussed": [
+        "财运"
+      ],
+      "end_time": "2026-03-08T18:48:54.837135",
+      "duration_seconds": 294.846268,
+      "rating": 3.0
     }
   ],
   "ratings": [
-    5.0
+    5.0,
+    3.0
   ]
 }
