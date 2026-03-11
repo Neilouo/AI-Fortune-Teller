@@ -323,7 +323,18 @@ st.markdown("""
         border: 1px solid rgba(255,255,255,0.25) !important;
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
+        text-shadow: none !important;
         border-radius: 10px;
+    }
+    /* 更高优先级：防止被 Streamlit/BaseWeb 覆盖成黑色 */
+    .main [data-testid="stTextInput"] input,
+    .main [data-testid="stTextInput"] textarea,
+    .main [data-baseweb="input"] input,
+    .main [data-baseweb="base-input"] input,
+    .main [data-baseweb="textarea"] textarea {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-color: #ffffff !important;
     }
     .stTextInput input::placeholder,
     [data-testid="stTextInput"] input::placeholder {
@@ -332,6 +343,8 @@ st.markdown("""
     }
     [data-testid="stTextInput"] input:focus { border-color: rgba(255,255,255,0.4) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.2) !important; }
     .stTextInput input { caret-color: #ffffff !important; }
+    /* 深色表单语义：减少 UA 默认黑字 */
+    :root { color-scheme: dark; }
     /* 解决浏览器自动填充导致的“白底白字/灰字” */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
