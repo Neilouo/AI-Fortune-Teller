@@ -257,13 +257,22 @@ st.markdown("""
     [data-testid="stSidebar"] .stButton > button {
         width: 100%;
         margin-bottom: 0.5rem;
-        background: rgba(255,255,255,0.06) !important;
-        color: #f0eef5 !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
+        background: rgba(255,255,255,0.10) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+        opacity: 1 !important;
     }
+    [data-testid="stSidebar"] .stButton > button * { color: #ffffff !important; fill: #ffffff !important; opacity: 1 !important; }
+    [data-testid="stSidebar"] .stButton > button:disabled {
+        background: rgba(255,255,255,0.06) !important;
+        color: rgba(255,255,255,0.65) !important;
+        border-color: rgba(255,255,255,0.10) !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stSidebar"] .stButton > button:disabled * { color: rgba(255,255,255,0.65) !important; fill: rgba(255,255,255,0.65) !important; }
     [data-testid="stSidebar"] .stButton > button:hover {
-        background: rgba(255,255,255,0.1) !important;
-        border-color: rgba(255,255,255,0.15) !important;
+        background: rgba(255,255,255,0.16) !important;
+        border-color: rgba(255,255,255,0.26) !important;
     }
 
     /* 侧边栏统计（保留兼容） */
@@ -306,6 +315,9 @@ st.markdown("""
     .stTextInput>div>div>input,
     .stTextInput input,
     [data-testid="stTextInput"] input,
+    [data-baseweb="input"] input,
+    [data-baseweb="base-input"] input,
+    [data-baseweb="textarea"] textarea,
     .stSelectbox>div {
         background: rgba(255,255,255,0.12) !important;
         border: 1px solid rgba(255,255,255,0.25) !important;
@@ -320,6 +332,18 @@ st.markdown("""
     }
     [data-testid="stTextInput"] input:focus { border-color: rgba(255,255,255,0.4) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.2) !important; }
     .stTextInput input { caret-color: #ffffff !important; }
+    /* 解决浏览器自动填充导致的“白底白字/灰字” */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff !important;
+        box-shadow: 0 0 0px 1000px rgba(255,255,255,0.12) inset !important;
+        transition: background-color 9999s ease-in-out 0s;
+        caret-color: #ffffff !important;
+    }
     .stSlider label { color: #f5f5f5 !important; }
     .stSelectbox label { color: #f5f5f5 !important; }
     .stDateInput label { color: #f5f5f5 !important; }
