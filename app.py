@@ -262,14 +262,25 @@ st.markdown("""
         border: 1px solid rgba(255,255,255,0.18) !important;
         opacity: 1 !important;
     }
-    [data-testid="stSidebar"] .stButton > button * { color: #ffffff !important; fill: #ffffff !important; opacity: 1 !important; }
+    [data-testid="stSidebar"] .stButton > button,
+    [data-testid="stSidebar"] .stButton > button * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        fill: #ffffff !important;
+        opacity: 1 !important;
+    }
     [data-testid="stSidebar"] .stButton > button:disabled {
         background: rgba(255,255,255,0.06) !important;
         color: rgba(255,255,255,0.65) !important;
         border-color: rgba(255,255,255,0.10) !important;
         opacity: 1 !important;
     }
-    [data-testid="stSidebar"] .stButton > button:disabled * { color: rgba(255,255,255,0.65) !important; fill: rgba(255,255,255,0.65) !important; }
+    [data-testid="stSidebar"] .stButton > button:disabled,
+    [data-testid="stSidebar"] .stButton > button:disabled * {
+        color: rgba(255,255,255,0.65) !important;
+        -webkit-text-fill-color: rgba(255,255,255,0.65) !important;
+        fill: rgba(255,255,255,0.65) !important;
+    }
     [data-testid="stSidebar"] .stButton > button:hover {
         background: rgba(255,255,255,0.16) !important;
         border-color: rgba(255,255,255,0.26) !important;
