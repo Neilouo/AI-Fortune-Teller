@@ -254,36 +254,48 @@ st.markdown("""
         color: rgba(220,215,235,0.65);
         line-height: 1.6;
     }
+    /* 侧边栏按钮 - 玻璃拟态设计 */
     [data-testid="stSidebar"] .stButton > button {
         width: 100%;
         margin-bottom: 0.5rem;
-        background: rgba(255,255,255,0.96) !important;
-        color: #000000 !important;
-        border: 1px solid rgba(0,0,0,0.06) !important;
-        opacity: 1 !important;
+        background: rgba(255,255,255,0.08) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.15) !important;
+        border-radius: 12px !important;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.02em !important;
     }
     [data-testid="stSidebar"] .stButton > button,
     [data-testid="stSidebar"] .stButton > button * {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        fill: #000000 !important;
-        opacity: 1 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        fill: #ffffff !important;
+    }
+    [data-testid="stSidebar"] .stButton > button:hover {
+        background: rgba(255,255,255,0.15) !important;
+        border-color: rgba(255,255,255,0.3) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    [data-testid="stSidebar"] .stButton > button:active {
+        transform: translateY(0);
+        background: rgba(255,255,255,0.2) !important;
     }
     [data-testid="stSidebar"] .stButton > button:disabled {
-        background: rgba(255,255,255,0.85) !important;
-        color: rgba(0,0,0,0.45) !important;
-        border-color: rgba(0,0,0,0.06) !important;
-        opacity: 1 !important;
+        background: rgba(255,255,255,0.03) !important;
+        color: rgba(255,255,255,0.3) !important;
+        border-color: rgba(255,255,255,0.05) !important;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
     }
     [data-testid="stSidebar"] .stButton > button:disabled,
     [data-testid="stSidebar"] .stButton > button:disabled * {
-        color: rgba(0,0,0,0.45) !important;
-        -webkit-text-fill-color: rgba(0,0,0,0.45) !important;
-        fill: rgba(0,0,0,0.45) !important;
-    }
-    [data-testid="stSidebar"] .stButton > button:hover {
-        background: rgba(255,255,255,1.0) !important;
-        border-color: rgba(0,0,0,0.14) !important;
+        color: rgba(255,255,255,0.3) !important;
+        -webkit-text-fill-color: rgba(255,255,255,0.3) !important;
+        fill: rgba(255,255,255,0.3) !important;
     }
 
     /* 侧边栏统计（保留兼容） */
