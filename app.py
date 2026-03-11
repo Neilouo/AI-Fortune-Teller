@@ -257,33 +257,33 @@ st.markdown("""
     [data-testid="stSidebar"] .stButton > button {
         width: 100%;
         margin-bottom: 0.5rem;
-        background: rgba(255,255,255,0.10) !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255,255,255,0.18) !important;
+        background: rgba(255,255,255,0.96) !important;
+        color: #111111 !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
         opacity: 1 !important;
     }
     [data-testid="stSidebar"] .stButton > button,
     [data-testid="stSidebar"] .stButton > button * {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        fill: #ffffff !important;
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
+        fill: #111111 !important;
         opacity: 1 !important;
     }
     [data-testid="stSidebar"] .stButton > button:disabled {
-        background: rgba(255,255,255,0.06) !important;
-        color: rgba(255,255,255,0.65) !important;
-        border-color: rgba(255,255,255,0.10) !important;
+        background: rgba(255,255,255,0.85) !important;
+        color: rgba(0,0,0,0.45) !important;
+        border-color: rgba(0,0,0,0.06) !important;
         opacity: 1 !important;
     }
     [data-testid="stSidebar"] .stButton > button:disabled,
     [data-testid="stSidebar"] .stButton > button:disabled * {
-        color: rgba(255,255,255,0.65) !important;
-        -webkit-text-fill-color: rgba(255,255,255,0.65) !important;
-        fill: rgba(255,255,255,0.65) !important;
+        color: rgba(0,0,0,0.45) !important;
+        -webkit-text-fill-color: rgba(0,0,0,0.45) !important;
+        fill: rgba(0,0,0,0.45) !important;
     }
     [data-testid="stSidebar"] .stButton > button:hover {
-        background: rgba(255,255,255,0.16) !important;
-        border-color: rgba(255,255,255,0.26) !important;
+        background: rgba(255,255,255,1.0) !important;
+        border-color: rgba(0,0,0,0.14) !important;
     }
 
     /* 侧边栏统计（保留兼容） */
