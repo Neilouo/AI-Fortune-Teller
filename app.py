@@ -258,15 +258,15 @@ st.markdown("""
         width: 100%;
         margin-bottom: 0.5rem;
         background: rgba(255,255,255,0.96) !important;
-        color: #111111 !important;
+        color: #000000 !important;
         border: 1px solid rgba(0,0,0,0.06) !important;
         opacity: 1 !important;
     }
     [data-testid="stSidebar"] .stButton > button,
     [data-testid="stSidebar"] .stButton > button * {
-        color: #111111 !important;
-        -webkit-text-fill-color: #111111 !important;
-        fill: #111111 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        fill: #000000 !important;
         opacity: 1 !important;
     }
     [data-testid="stSidebar"] .stButton > button:disabled {
