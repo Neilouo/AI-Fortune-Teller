@@ -243,7 +243,7 @@ st.markdown("""
     .sidebar-metric-item { flex: 1; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 0.6rem; text-align: center; border: 1px solid rgba(255,255,255,0.06); }
     .sidebar-metric-item .val { font-size: 0.95rem; font-weight: 600; color: #ffffff; }
     .sidebar-metric-item .lbl { font-size: 0.65rem; color: rgba(240,238,245,0.7); margin-top: 0.15rem; }
-    .sidebar-personality-item { font-size: 0.8rem; color: #f0eef5; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+    .sidebar-personality-item { font-size: 0.8rem; color: #111111; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
     .sidebar-personality-item:last-child { border-bottom: none; }
     .sidebar-footer {
         margin-top: 1.5rem;
