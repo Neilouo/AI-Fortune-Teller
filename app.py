@@ -529,7 +529,7 @@ def display_birth_info_input():
         )
     with col2:
         birth_hour = st.slider(
-            "出生时辰（小时）⏰",
+            "出生时辰⏰",
             0, 23, 12,
             help="0–23 点。不确定可先选 12 点，对整体分析影响有限"
         )
