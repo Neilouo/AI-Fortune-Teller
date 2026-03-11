@@ -343,8 +343,46 @@ st.markdown("""
     }
     [data-testid="stTextInput"] input:focus { border-color: rgba(255,255,255,0.4) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.2) !important; }
     .stTextInput input { caret-color: #ffffff !important; }
-    /* 深色表单语义：减少 UA 默认黑字 */
+    /* 表单语义：输入框采用浅底黑字（你要求黑色文字） */
     :root { color-scheme: dark; }
+    /* 输入框：浅底 + 黑字，更清晰 */
+    .stTextInput>div>div>input,
+    .stTextInput input,
+    [data-testid="stTextInput"] input,
+    [data-baseweb="input"] input,
+    [data-baseweb="base-input"] input,
+    [data-baseweb="textarea"] textarea {
+        background: rgba(255,255,255,0.92) !important;
+        border: 1px solid rgba(255,255,255,0.45) !important;
+        color: #0b0b0f !important;
+        -webkit-text-fill-color: #0b0b0f !important;
+        caret-color: #0b0b0f !important;
+    }
+    .stTextInput input::placeholder,
+    [data-testid="stTextInput"] input::placeholder,
+    textarea::placeholder {
+        color: rgba(20,20,28,0.55) !important;
+        -webkit-text-fill-color: rgba(20,20,28,0.55) !important;
+    }
+    [data-testid="stTextInput"] input:focus,
+    [data-baseweb="input"] input:focus,
+    [data-baseweb="base-input"] input:focus,
+    [data-baseweb="textarea"] textarea:focus {
+        border-color: rgba(255,255,255,0.7) !important;
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.18) !important;
+    }
+    /* 自动填充：保持浅底黑字 */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+        -webkit-text-fill-color: #0b0b0f !important;
+        box-shadow: 0 0 0px 1000px rgba(255,255,255,0.92) inset !important;
+        transition: background-color 9999s ease-in-out 0s;
+        caret-color: #0b0b0f !important;
+    }
     /* 解决浏览器自动填充导致的“白底白字/灰字” */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
