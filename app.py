@@ -285,6 +285,12 @@ st.markdown("""
         background: rgba(255,255,255,1.0) !important;
         border-color: rgba(0,0,0,0.14) !important;
     }
+    /* 只针对侧边栏两个操作按钮，把文字彻底锁成黑色 */
+    [data-testid="stSidebar"] .stButton > button p,
+    [data-testid="stSidebar"] .stButton > button span {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
 
     /* 侧边栏统计（保留兼容） */
     .stats-box {
