@@ -206,7 +206,7 @@ st.markdown("""
         padding: 1.25rem 1rem 1.5rem !important;
         background: transparent !important;
     }
-    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p { color: #f0eef5 !important; }
+    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p { color: #111111 !important; }
     [data-testid="stSidebar"] h3 { color: #ffffff !important; font-size: 0.9rem !important; margin-bottom: 0.6rem !important; }
     [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.08) !important; margin: 1rem 0 !important; }
 
